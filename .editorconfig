@@ -1,0 +1,75 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{cs,csx}]
+indent_style = space
+indent_size = 4
+tab_width = 4
+
+# .NET / C# formatting
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = false
+dotnet_style_require_accessibility_modifiers = always:warning
+csharp_using_directive_placement = outside_namespace:warning
+csharp_prefer_braces = true:warning
+csharp_new_line_before_open_brace = all
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+csharp_new_line_before_finally = true
+csharp_new_line_before_members_in_object_initializers = true
+csharp_new_line_between_query_expression_clauses = true
+csharp_indent_case_contents = true
+csharp_indent_switch_labels = true
+csharp_space_after_cast = false
+csharp_space_after_keywords_in_control_flow_statements = true
+csharp_space_around_binary_operators = before_and_after
+csharp_preserve_single_line_blocks = false
+csharp_preserve_single_line_statements = false
+
+# Expression-bodied members: prefer concise accessors and simple members; use blocks for control flow.
+csharp_style_expression_bodied_accessors = true: suggestion
+csharp_style_expression_bodied_properties = true: suggestion
+csharp_style_expression_bodied_indexers = true: suggestion
+csharp_style_expression_bodied_methods = false: suggestion
+csharp_style_expression_bodied_constructors = false: suggestion
+csharp_style_expression_bodied_operators = true: suggestion
+csharp_style_expression_bodied_lambdas = true: suggestion
+
+# Modern C# defaults
+csharp_style_namespace_declarations = file_scoped:warning
+csharp_style_prefer_primary_constructors = true:suggestion
+csharp_style_prefer_top_level_statements = true:suggestion
+csharp_style_prefer_null_check_over_type_check = true:warning
+csharp_style_prefer_pattern_matching = true:suggestion
+csharp_style_prefer_range_operator = true:suggestion
+csharp_style_prefer_index_operator = true:suggestion
+csharp_style_implicit_object_creation_when_type_is_apparent = true:suggestion
+csharp_style_inlined_variable_declaration = true:suggestion
+
+# Naming conventions
+ dotnet_naming_rule.interfaces_start_with_i.severity = warning
+dotnet_naming_rule.interfaces_start_with_i.symbols = interface_symbols
+dotnet_naming_rule.interfaces_start_with_i.style = i_prefix
+dotnet_naming_symbols.interface_symbols.applicable_kinds = interface
+dotnet_naming_symbols.interface_symbols.applicable_accessibilities = *
+dotnet_naming_style.i_prefix.required_prefix = I
+dotnet_naming_style.i_prefix.capitalization = pascal_case
+
+dotnet_naming_rule.types_and_members_pascal_case.severity = warning
+dotnet_naming_rule.types_and_members_pascal_case.symbols = pascal_symbols
+dotnet_naming_rule.types_and_members_pascal_case.style = pascal_style
+dotnet_naming_symbols.pascal_symbols.applicable_kinds = class, struct, interface, enum, property, method, event
+dotnet_naming_symbols.pascal_symbols.applicable_accessibilities = *
+dotnet_naming_style.pascal_style.capitalization = pascal_case
+
+dotnet_naming_rule.private_fields_camel_case.severity = warning
+dotnet_naming_rule.private_fields_camel_case.symbols = private_fields
+dotnet_naming_rule.private_fields_camel_case.style = camel_style
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private, internal
+dotnet_naming_style.camel_style.capitalization = camel_case

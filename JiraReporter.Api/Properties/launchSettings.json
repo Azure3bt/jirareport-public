@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "JiraReporter.Api": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "Dashboard",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:62030;http://localhost:62031"
+    }
+  }
+}

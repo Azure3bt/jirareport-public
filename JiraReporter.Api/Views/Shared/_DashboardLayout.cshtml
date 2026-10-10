@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - JiraReporter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <style>
+            :root {
+                --ink: #e8edf7;
+                --muted: #93a0b5;
+                --bg: #0b1220;
+                --panel: #111c2e;
+                --line: #24334a;
+                --accent: #6d8cff
+            }
+
+            * {
+                font-family: 'Vazirmatn',sans-serif
+            }
+
+            body {
+                margin: 0;
+                background: var(--bg);
+                color: var(--ink);
+                overflow-x: hidden
+            }
+
+            .shell {
+                display: flex;
+                min-height: 100vh
+            }
+
+            .sidebar {
+                width: 270px;
+                background: #0e1828;
+                border-left: 1px solid var(--line);
+                padding: 24px 18px;
+                flex-shrink: 0
+            }
+
+            .brand {
+                font-size: 1.2rem;
+                font-weight: 700;
+                margin-bottom: 30px
+            }
+
+                .brand span {
+                    color: #89a2ff
+                }
+
+            .side-label {
+                color: var(--muted);
+                font-size: .8rem;
+                margin: 20px 0 10px
+            }
+
+            .report-link {
+                display: block;
+                color: #c5cee0;
+                text-decoration: none;
+                padding: 10px 12px;
+                border-radius: 10px;
+                margin: 4px 0
+            }
+
+                .report-link:hover, .report-link.active {
+                    background: #1c2b43;
+                    color: white
+                }
+
+            .project-input {
+                background: #0a1321 !important;
+                color: white !important;
+                border-color: var(--line) !important
+            }
+
+            .date-note {
+                color: var(--muted);
+                font-size: .82rem;
+                line-height: 1.9
+            }
+
+            .main {
+                flex: 1;
+                min-width: 0;
+                max-width: 100%;
+                padding: 22px 28px
+            }
+
+            .topbar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                margin-bottom: 24px
+            }
+
+                .topbar h1 {
+                    font-size: 1.35rem;
+                    margin: 0
+                }
+
+            .project-badge {
+                color: #aebfff;
+                background: #1b2940;
+                padding: 7px 12px;
+                border-radius: 9px
+            }
+
+            .sprint-select {
+                background: #0a1321 !important;
+                color: white !important;
+                border-color: var(--line) !important;
+                min-width: 180px
+            }
+
+                .sprint-select:focus {
+                    border-color: var(--accent) !important;
+                    box-shadow: none !important
+                }
+
+            .panel, .stat-card {
+                background: var(--panel);
+                border: 1px solid var(--line);
+                border-radius: 15px
+            }
+
+            .stat-card {
+                padding: 18px;
+                height: 100%
+            }
+
+            .stat-label {
+                color: var(--muted);
+                font-size: .9rem
+            }
+
+            .stat-value {
+                font-size: 1.65rem;
+                font-weight: 700;
+                margin-top: 8px
+            }
+
+            .chart-card {
+                padding: 18px;
+                height: 100%;
+                min-height: 310px
+            }
+
+                .chart-card h2 {
+                    font-size: 1rem;
+                    margin: 0 0 15px
+                }
+
+            .chart-wrap {
+                height: 240px;
+                position: relative
+            }
+
+            .individual-performance-table {
+                --bs-table-bg: transparent;
+                --bs-table-color: var(--ink);
+                --bs-table-border-color: #293a53;
+                border-collapse: separate;
+                border-spacing: 0 6px;
+                min-width: 850px;
+            }
+
+            .individual-performance-table th,
+            .individual-performance-table td {
+                text-align: center;
+                vertical-align: middle;
+                white-space: nowrap;
+                padding: 11px 12px;
+                border: 0;
+            }
+
+            .individual-performance-table thead th {
+                color: #cbd6ea;
+                background: #18263a;
+                font-size: .82rem;
+                border-bottom: 1px solid #30425e;
+            }
+
+            .individual-performance-table thead th:first-child,
+            .individual-performance-table tbody td:first-child {
+                text-align: right;
+                border-radius: 0 9px 9px 0;
+                min-width: 150px;
+            }
+
+            .individual-performance-table thead th:last-child,
+            .individual-performance-table tbody td:last-child {
+                border-radius: 9px 0 0 9px;
+            }
+
+            .individual-performance-table tbody td {
+                font-variant-numeric: tabular-nums;
+                font-weight: 600;
+            }
+
+            .individual-performance-table tbody tr:hover td {
+                filter: brightness(1.18);
+            }
+
+            .individual-performance-table thead th:nth-child(2),
+            .individual-performance-table tbody td:nth-child(2) { color: #8fb4ff; background: #182944; }
+            .individual-performance-table thead th:nth-child(3),
+            .individual-performance-table tbody td:nth-child(3) { color: #ffc779; background: #332a20; }
+            .individual-performance-table thead th:nth-child(4),
+            .individual-performance-table tbody td:nth-child(4) { color: #73dfc2; background: #18332f; }
+            .individual-performance-table thead th:nth-child(5),
+            .individual-performance-table tbody td:nth-child(5) { color: #c3a4ff; background: #2b2440; }
+            .individual-performance-table thead th:nth-child(6),
+            .individual-performance-table tbody td:nth-child(6) { color: #75d7f2; background: #19313c; }
+            .individual-performance-table thead th:nth-child(7),
+            .individual-performance-table tbody td:nth-child(7) { color: #ff9da8; background: #38242e; }
+
+            .individual-performance-table tbody td:first-child {
+                color: #e8edf7;
+                background: #18263a;
+                font-weight: 500;
+            }
+
+            .chart-error {
+                color: #ff9b9b;
+                font-size: .85rem;
+                min-height: 20px
+            }
+
+            .worklog-table {
+                --bs-table-bg: transparent;
+                --bs-table-color: var(--ink);
+                --bs-table-border-color: var(--line);
+                --bs-table-striped-bg: #142238;
+                --bs-table-striped-color: var(--ink);
+                border-collapse: separate;
+                border-spacing: 0 5px;
+                min-width: 560px;
+            }
+
+            .worklog-table thead th {
+                background: #1b2d48 !important;
+                color: #cbd7ff !important;
+                border: 0;
+                font-weight: 600;
+                white-space: nowrap;
+            }
+
+            .worklog-table thead th:first-child { border-radius: 0 8px 8px 0; }
+            .worklog-table thead th:last-child { border-radius: 8px 0 0 8px; }
+            .worklog-table tbody td {
+                background: #0e1929 !important;
+                color: var(--ink) !important;
+                border-top: 1px solid #1d2b40;
+                border-bottom: 1px solid #1d2b40;
+                padding: 10px 12px;
+            }
+
+            .worklog-table tbody tr:hover td { background: #192941 !important; }
+            .worklog-table .worklog-col-person { color: #8de0ca !important; }
+            .worklog-table .worklog-col-hours { color: #ffc46b !important; font-weight: 700; white-space: nowrap; }
+            .worklog-table .worklog-col-worklogCount { color: #9bb4ff !important; text-align: center; }
+            .worklog-table .worklog-col-issueKey { color: #b9a0ff !important; font-weight: 600; white-space: nowrap; }
+
+            .loading-cover {
+                position: fixed;
+                inset: 0;
+                background: #07101dcc;
+                z-index: 1050;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.1rem
+            }
+
+                .loading-cover[hidden] {
+                    display: none
+                }
+
+            @@media(max-width:850px) {
+                .sidebar {
+                    width: 220px
+                }
+
+                .main {
+                    padding: 18px
+                }
+
+                .topbar {
+                    align-items: flex-start;
+                    flex-direction: column
+                }
+
+                .topbar > .d-flex {
+                    width: 100%;
+                    flex-wrap: wrap
+                }
+
+                .sprint-select {
+                    flex: 1 1 190px;
+                    min-width: 0
+                }
+            }
+
+            @@media(max-width:650px) {
+                .shell {
+                    display: block
+                }
+
+                .sidebar {
+                    width: auto;
+                    border-left: 0;
+                    border-bottom: 1px solid var(--line);
+                    padding: 14px 14px 12px
+                }
+
+                .main {
+                    padding: 16px 12px
+                }
+
+                .topbar {
+                    align-items: flex-start;
+                    flex-direction: column
+                }
+
+                .brand { margin-bottom: 8px; }
+                .side-label { margin: 12px 0 7px; }
+
+                .sidebar nav {
+                    display: flex;
+                    gap: 6px;
+                    overflow-x: auto;
+                    overscroll-behavior-inline: contain;
+                    padding: 2px 0 8px;
+                    scrollbar-width: thin;
+                    -webkit-overflow-scrolling: touch
+                }
+
+                .sidebar nav .report-link {
+                    flex: 0 0 auto;
+                    white-space: nowrap;
+                    padding: 8px 10px;
+                    margin: 0;
+                    background: #111c2e
+                }
+
+                .sidebar nav .report-link.active { background: #1c2b43; }
+                .project-input { max-width: 100%; }
+                .date-note { line-height: 1.6; }
+
+                .topbar > .d-flex {
+                    display: grid !important;
+                    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+                    width: 100%;
+                    gap: 8px !important
+                }
+
+                .topbar .sprint-select,
+                .topbar .project-badge,
+                .topbar #syncButton { width: 100%; min-width: 0; }
+                .topbar .project-badge { text-align: center; }
+                .chart-card { padding: 14px; min-height: 280px; }
+                .chart-wrap { height: 210px; }
+                .stat-card { padding: 14px; }
+                .stat-value { font-size: 1.35rem; overflow-wrap: anywhere; }
+                .worklog-table tbody td { padding: 8px 10px; }
+            }
+
+            @@media(max-width:380px) {
+                .main { padding-inline: 9px; }
+                .chart-card { padding: 12px; }
+                .topbar > .d-flex { grid-template-columns: 1fr; }
+                .stat-label { font-size: .8rem; }
+            }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <aside class="sidebar">
+            <div class="brand">Jira<span>Reporter</span></div>
+            <div class="side-label">گزارش‌ها</div>
+            <nav>
+                <a class="report-link active" href="#cycleTimeChart">زمان چرخه</a>
+                <a class="report-link" href="#bottleneckChart">زمان در وضعیت</a>
+                <a class="report-link" href="#wipAgingChart">سن کارهای در جریان</a>
+                <a class="report-link" href="#sprintScopeChart">دامنه اسپرینت</a>
+                <a class="report-link" href="#workloadChart">بار کاری</a>
+                <a class="report-link" href="#bugRatioChart">نسبت باگ‌ها</a>
+                <a class="report-link" href="#velocityChart">سرعت و تعهد (Velocity)</a>
+                <a class="report-link" href="#reworkChart">نرخ دوباره‌کاری (Rework)</a>
+                <a class="report-link" href="#quarterlyChart">تحلیل فصلی کارها (Quarterly)</a>
+                <a class="report-link" href="#individualPerformanceSection">نمای فردی اعضای تیم</a>
+                <a class="report-link" href="#worklogSection">گزارش زمان‌کار (Worklog)</a>
+            </nav>
+            <label class="side-label d-block" for="projectKeyInput">کلید پروژه</label>
+            <input id="projectKeyInput" class="form-control project-input" placeholder="مثلاً DEMO" autocomplete="off" />
+            <div class="side-label">اطلاعات</div>
+            <div class="date-note">داشبورد گزارش‌های Jira<br />آخرین بررسی: <span id="updatedAt">—</span></div>
+        </aside>
+        <main class="main">
+            <header class="topbar">
+                <div>
+                    <h1>نمای کلی پروژه</h1>
+                    <div class="text-secondary mt-1">گزارش‌های تحلیلی و وضعیت کار</div>
+                </div>
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                    <select id="sprintFilter" class="form-select form-select-sm sprint-select">
+                        <option value="">همه اسپرینت‌ها (All Sprints)</option>
+                    </select>
+                    <select id="worklogUserFilter" class="form-select form-select-sm sprint-select" aria-label="فیلتر کاربر worklog"><option value="">همه کاربران</option></select>
+                    <span class="project-badge">پروژه: <b id="selectedProject">—</b></span>
+                    <button id="syncButton" class="btn btn-primary">همگام‌سازی</button>
+                </div>
+            </header>
+            @RenderBody()
+        </main>
+    </div>
+    <div id="loadingOverlay" class="loading-cover" hidden><div class="spinner-border text-primary ms-3" role="status"></div>در حال دریافت گزارش‌ها…</div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script src="~/js/dashboard.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

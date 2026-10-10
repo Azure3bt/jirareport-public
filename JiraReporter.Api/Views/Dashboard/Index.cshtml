@@ -1,0 +1,55 @@
+@{
+    ViewData["Title"] = "داشبورد";
+}
+<div id="dashboardError" class="alert alert-danger" role="alert" hidden></div>
+<section class="row g-3 mb-4" aria-label="شاخص‌های کلیدی">
+    <div class="col-6 col-xl-3"><div class="stat-card"><div class="stat-label">مجموع آیتم‌ها</div><div class="stat-value" id="kpi-total">—</div></div></div>
+    <div class="col-6 col-xl-3"><div class="stat-card"><div class="stat-label">میانگین زمان چرخه</div><div class="stat-value" id="kpi-cycle">—</div></div></div>
+    <div class="col-6 col-xl-3"><div class="stat-card"><div class="stat-label">کارهای در جریان (WIP)</div><div class="stat-value" id="kpi-wip">—</div></div></div>
+    <div class="col-6 col-xl-3"><div class="stat-card"><div class="stat-label">نسبت باگ</div><div class="stat-value" id="kpi-bug">—</div></div></div>
+</section>
+<section class="panel p-3 p-md-4 mb-3" id="individualPerformanceSection">
+    <h2 class="h5 mb-2">نمای فردی اعضای تیم</h2>
+    <p class="text-secondary small mb-3">شاخص‌ها بر اساس مسئول فعلی Issueها هستند. تکمیل، Story Point و میانگین زمان چرخه مربوط به ۳۰ روز اخیر است؛ این اعداد برای شناخت روند و ظرفیت‌اند و رتبه‌بندی افراد محسوب نمی‌شوند.</p>
+    <div id="individualPerformanceError" class="text-danger small mb-2" role="alert"></div>
+    <div class="table-responsive">
+        <table class="table individual-performance-table align-middle mb-0">
+            <thead>
+                <tr>
+                    <th scope="col">عضو تیم</th>
+                    <th scope="col">کل موارد منتسب</th>
+                    <th scope="col">کارهای باز</th>
+                    <th scope="col">تکمیل‌شده در ۳۰ روز</th>
+                    <th scope="col">Story Point تکمیل‌شده</th>
+                    <th scope="col">میانگین زمان چرخه (روز)</th>
+                    <th scope="col">موارد دارای بازکاری</th>
+                </tr>
+            </thead>
+            <tbody id="individualPerformanceRows">
+                <tr><td colspan="7" class="text-secondary">در حال بارگذاری…</td></tr>
+            </tbody>
+        </table>
+<section id="worklogSection" class="mt-4">
+    <h2 class="h5 mb-3">گزارش زمان‌کار ثبت‌شده در Jira</h2>
+    <div class="row g-3 mb-3">
+        <div class="col-6 col-xl-3"><div class="stat-card"><div class="stat-label">مجموع ساعت</div><div class="stat-value" id="worklog-total-hours">—</div></div></div>
+        <div class="col-6 col-xl-3"><div class="stat-card"><div class="stat-label">تعداد ثبت‌ها</div><div class="stat-value" id="worklog-count">—</div></div></div>
+        <div class="col-12 col-xl-6"><article class="panel chart-card"><h2>ساعت ثبت‌شده به تفکیک روز</h2><div class="chart-error" data-chart-error="worklogDailyChart"></div><div class="chart-wrap"><canvas id="worklogDailyChart" aria-label="ساعت worklog روزانه"></canvas></div></article></div>
+        <div class="col-12 col-xl-6"><article class="panel chart-card"><h2>ساعت به تفکیک کاربر</h2><div id="worklogPeople" class="table-responsive"></div></article></div>
+        <div class="col-12 col-xl-6"><article class="panel chart-card"><h2>بیشترین زمان به تفکیک Issue</h2><div id="worklogIssues" class="table-responsive"></div></article></div>
+    </div>
+</section>
+<section class="row g-3">
+    <!-- نمودارهای قبلی -->
+    <div class="col-12 col-xl-6"><article class="panel chart-card"><h2>زمان چرخه</h2><div class="chart-error" data-chart-error="cycleTimeChart"></div><div class="chart-wrap"><canvas id="cycleTimeChart" aria-label="نمودار زمان چرخه"></canvas></div></article></div>
+    <div class="col-12 col-xl-6"><article class="panel chart-card"><h2>گلوگاه‌ها · زمان در وضعیت</h2><div class="chart-error" data-chart-error="bottleneckChart"></div><div class="chart-wrap"><canvas id="bottleneckChart" aria-label="نمودار زمان در وضعیت"></canvas></div></article></div>
+    <div class="col-12 col-xl-6"><article class="panel chart-card"><h2>سن کارهای در جریان</h2><div class="text-secondary small mb-2">۱۲ مورد قدیمی‌تر نمایش داده می‌شود؛ برای دیدن عنوان و وضعیت کامل روی میله بروید.</div><div class="chart-error" data-chart-error="wipAgingChart"></div><div class="chart-wrap"><canvas id="wipAgingChart" aria-label="۱۲ مورد قدیمی‌تر در نمودار سن WIP"></canvas></div></article></div>
+    <div class="col-12 col-xl-6"><article class="panel chart-card"><h2>دامنه اسپرینت</h2><div class="chart-error" data-chart-error="sprintScopeChart"></div><div class="chart-wrap"><canvas id="sprintScopeChart" aria-label="نمودار دامنه اسپرینت"></canvas></div></article></div>
+    <div class="col-12 col-xl-6"><article class="panel chart-card"><h2>بار کاری</h2><div class="chart-error" data-chart-error="workloadChart"></div><div class="chart-wrap"><canvas id="workloadChart" aria-label="نمودار بار کاری"></canvas></div></article></div>
+    <div class="col-12 col-xl-6"><article class="panel chart-card"><h2>نسبت باگ‌ها</h2><div class="chart-error" data-chart-error="bugRatioChart"></div><div class="chart-wrap"><canvas id="bugRatioChart" aria-label="نمودار نسبت باگ"></canvas></div></article></div>
+
+    <!-- گزارش‌های تحلیلی جدید -->
+    <div class="col-12 col-xl-6"><article class="panel chart-card"><h2>سرعت اسپرینت و نسبت تعهد (Velocity & Say/Do)</h2><div class="chart-error" data-chart-error="velocityChart"></div><div class="chart-wrap"><canvas id="velocityChart" aria-label="نمودار سرعت اسپرینت و نسبت تعهد"></canvas></div></article></div>
+    <div class="col-12 col-xl-6"><article class="panel chart-card"><h2>نرخ دوباره‌کاری (Rework Rate)</h2><div class="chart-error" data-chart-error="reworkChart"></div><div class="chart-wrap"><canvas id="reworkChart" aria-label="نمودار نرخ دوباره‌کاری"></canvas></div></article></div>
+    <div class="col-12"><article class="panel chart-card"><h2>تحلیل فصلی توزیع کار و سلامت تحویل (Quarterly Allocation)</h2><div class="chart-error" data-chart-error="quarterlyChart"></div><div class="chart-wrap"><canvas id="quarterlyChart" aria-label="نمودار تحلیل فصلی"></canvas></div><div id="quarterlyInsight" class="alert alert-dark mt-2 mb-0 d-none text-light border-secondary"></div></article></div>
+</section>
